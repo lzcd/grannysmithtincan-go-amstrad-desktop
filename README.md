@@ -1,5 +1,12 @@
-# FujiNet Go for Amstrad CPC 464
+# Disclaimer
 
+This is a placeholder until the awesome progress of http://fujinet.online gets around to adding the Amstrad CPC machine to their list of supported devices.
+
+> It is not the greatest add-on in the world, no  
+> this is just a tribute.
+
+# What FujiNet Go for Amstrad CPC 464 could look like
+ 
 The GNOME window and headless runner share a 64 KiB CPC 464 session. With imported firmware and the FujiNet-PC runtime installed, the desktop boots into CPC CONFIG for browsing TNFS. Offline sessions boot into Locomotive BASIC.
 
 The [user guide](docs/USER_GUIDE.md) covers first launch, CPC CONFIG, TNFS program loading, and all desktop controls.
