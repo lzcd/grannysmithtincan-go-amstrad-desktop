@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop-application">
+  <id>online.fujinet.go.amstrad.gnome</id>
+  <metadata_license>FSFAP</metadata_license>
+  <name>FujiNet Go — Amstrad CPC 464</name>
+  <summary>Amstrad CPC 464 emulator with FujiNet</summary>
+  <description>
+    <p>Boot into Locomotive BASIC or FujiNet CONFIG, browse a TNFS server,
+    and run small Z80 programs from the emulated CPC.</p>
+    <p>Import your CPC 464 OS and BASIC firmware on first launch. The app
+    also provides controller input, snapshot loading, and a Z80 debugger.</p>
+  </description>
+  <launchable type="desktop-id">online.fujinet.go.amstrad.gnome.desktop</launchable>
+  <content_rating type="oars-1.1"/>
+  <releases>
+    <release version="0.1.0" date="2026-11-21"/>
+  </releases>
+</component>

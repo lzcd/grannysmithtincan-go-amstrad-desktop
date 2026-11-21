@@ -1,0 +1,28 @@
+# Out-of-source builds
+/build/
+/build-*/
+!/build-aux/
+/.flatpak-builder/
+
+# Build products
+fujinet-go-amstrad
+cpc-headless
+cpc-fuji-card-test
+*.o
+*.a
+__pycache__/
+
+# CTest and headless boot captures
+Testing/
+boot.ppm
+command.ppm
+reset.ppm
+fuji-reply.ppm
+fuji-timeout.ppm
+fuji-reset.ppm
+fuji-directory.ppm
+fuji-program.ppm
+
+/third_party/chips/
+/tools/roms/
+*.rom

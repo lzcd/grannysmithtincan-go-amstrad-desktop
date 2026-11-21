@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Name=FujiNet Go — Amstrad CPC 464
+Comment=Run an Amstrad CPC 464 with FujiNet
+Exec=fujinet-go-amstrad
+Icon=online.fujinet.go.amstrad.gnome
+Categories=Game;Emulator;
+Terminal=false
+StartupNotify=true

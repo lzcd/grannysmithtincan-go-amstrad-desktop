@@ -1,0 +1,70 @@
+id: online.fujinet.go.amstrad.gnome
+runtime: org.gnome.Platform
+runtime-version: '50'
+sdk: org.gnome.Sdk
+command: fujinet-go-amstrad
+finish-args:
+  - --share=ipc
+  - --share=network
+  - --socket=wayland
+  - --socket=fallback-x11
+  - --socket=pulseaudio
+  - --device=dri
+  - --device=input
+cleanup:
+  - /include
+  - /lib/*.a
+  - /lib/cmake
+  - /lib/fujinet-build-python
+  - /lib/pkgconfig
+modules:
+  - name: mbedtls
+    buildsystem: cmake-ninja
+    config-opts:
+      - -DENABLE_PROGRAMS=OFF
+      - -DENABLE_TESTING=OFF
+      - -DUSE_SHARED_MBEDTLS_LIBRARY=OFF
+      - -DCMAKE_INSTALL_LIBDIR=lib
+    sources:
+      - type: archive
+        url: https://github.com/Mbed-TLS/mbedtls/releases/download/mbedtls-3.6.7/mbedtls-3.6.7.tar.bz2
+        sha256: a7e8bcbec0e6f761b4af24f25677626b35f762f68eef79c08677a363212d11f6
+  - name: pyyaml
+    buildsystem: simple
+    build-commands:
+      - mkdir -p /app/lib/fujinet-build-python
+      - cp -r lib/yaml /app/lib/fujinet-build-python/
+    sources:
+      - type: archive
+        url: https://files.pythonhosted.org/packages/source/P/PyYAML/pyyaml-6.0.2.tar.gz
+        sha256: d584d9ec91ad65861cc08d42e834324ef890a082e591037abe114850ff7bbc3e
+  - name: fujinet-pc
+    buildsystem: simple
+    build-options:
+      env:
+        PYTHONPATH: /app/lib/fujinet-build-python
+    build-commands:
+      - cmake -S . -B _build -G Ninja -DFUJINET_TARGET=RS232 -DCMAKE_BUILD_TYPE=Release -DCMAKE_POLICY_VERSION_MINIMUM=3.5 -DMBEDTLS_ROOT_DIR=/app
+      - cmake --build _build --target dist --parallel "$FLATPAK_BUILDER_N_JOBS"
+      - install -Dm755 _build/dist/fujinet /app/libexec/fujinet-go-amstrad/fujinet
+      - install -Dm644 _build/dist/fnconfig.ini /app/libexec/fujinet-go-amstrad/fnconfig.ini
+      - cp -r _build/dist/data /app/libexec/fujinet-go-amstrad/
+      - install -Dm644 LICENSE /app/share/licenses/fujinet-pc/LICENSE
+    sources:
+      - type: git
+        url: https://github.com/FujiNetWIFI/fujinet-firmware.git
+        commit: 8f7231a784891e93b7ca0cbcf91c94f26e05278c
+        disable-submodules: true
+  - name: fujinet-go-amstrad
+    buildsystem: cmake-ninja
+    config-opts:
+      - -DBUILD_TESTING=OFF
+    sources:
+      - type: dir
+        path: ../..
+        skip: [.git, .agents, .aws, .codex, .flatpak-builder, build, third_party]
+      - type: archive
+        dest: third_party/chips
+        url: https://codeload.github.com/floooh/chips/tar.gz/ca7d7ddd3ba77b48685d24120cf413ea53786767
+        archive-type: tar-gzip
+        sha256: bfc2e653572d923488a45bd7a40d214864a0855ff2b3eac5113f356c405aa068
